@@ -11,9 +11,6 @@ function App() {
               <div className="row">
                   <Header />
               </div>
-              {/*<div className="row">*/}
-              {/*    <Carousel />*/}
-              {/*</div>*/}
               <div className="row mt-3">
                   <div className="col">
                           <Posts />

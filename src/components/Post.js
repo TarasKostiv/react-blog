@@ -1,6 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
+import ImageModal from "./ImageModal";
 
 const Post = ({title, description, imgPath}) => {
+    const [isBlured , setIsBlured] = useState(false)
+    const [modalIsOpen , setModalOpen] = useState(false)
+
+    const handleMouse = (value) => setIsBlured(value)
+
+    const handleModal = () => setModalOpen(prev => !prev)
+
     return (
         // <div className="card bg-dark text-white mb-3">
         //     <img  src={imgPath} className="card-img" alt={title} />
@@ -11,42 +19,30 @@ const Post = ({title, description, imgPath}) => {
         //     </div>
         // </div>
 
-        <div className="col">
-            <div className="card text-white bg-dark  border-secondary">
-                <img src={imgPath} className="card-img-top" alt={title} />
-                <div className="card-body">
-                    <h5 className="card-title">{title}</h5>
-                    <p className="card-text">{description}</p>
-                    {/*<p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>*/}
-                </div>
-            </div>
-        </div>
-
-
-        //
-        // <div className="card mb-3">
-        //     <img  src={imgPath} className="card-img" alt={title} />
-        //         <div className="card-body">
+        // <div className="col" onMouseEnter={() => handleMouse(true)} onMouseLeave={() => handleMouse(false)}>
+        //     <div className="card text-white bg-dark  border-secondary">
+        //         <img src={imgPath} className="card-img-top" alt={title} />
+        //         {isBlured ? (<div className="card-body" style={{height: "150px", overflow: 'hidden'}}>
         //             <h5 className="card-title">{title}</h5>
-        //             <p className="card-text">{description}</p>
+        //             <p className="card-text" style={{textOverflow: "ellipsis"}}>{description}</p>
         //             {/*<p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>*/}
-        //         </div>
-        // </div>
-        //
-        // <div className="card mb-3" style="max-width: 540px;">
-        //     <div className="row g-0">
-        //         <div className="col-md-4">
-        //             <img  src={imgPath} alt={title} />
-        //         </div>
-        //         <div className="col-md-8">
-        //             <div className="card-body">
-        //                 <h5 className="card-title">{title}</h5>
-        //                 <p className="card-text">{description}</p>
-        //                 {/*<p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>*/}
-        //             </div>
-        //         </div>
+        //         </div>) : null}
         //     </div>
         // </div>
+
+        <div className="col" style={{fontFamily: "\'Goblin One\', cursive"}} onClick={handleModal} onMouseEnter={() => handleMouse(true)} onMouseLeave={() => handleMouse(false)}>
+            <div className="card text-white bg-dark border-secondary">
+                <img src={imgPath} className="card-img-top" style={isBlured ? {filter: 'blur(4px)'} : null}  alt={title} />
+                {isBlured ? (
+                    <div style={{background: 'rgba(0, 0, 0, 0.5)'}} className="card-img-overlay d-flex justify-content-center align-items-center">
+                        <h3 className="card-title">{title}</h3>
+                    </div>
+                ) : null}
+            </div>
+
+            <ImageModal close={handleModal} isOpen={modalIsOpen} description={description} title={title}/>
+        </div>
+
     );
 };
 
